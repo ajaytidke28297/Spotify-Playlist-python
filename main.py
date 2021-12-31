@@ -28,6 +28,7 @@ sp = spotipy.Spotify(
 user_id = sp.current_user()['id']
 
 print(f"User id: {user_id}")
+print("Hello")
 
 # Billboard URL
 BILL_BOARD_URL = 'https://www.billboard.com/charts/hot-100/'
