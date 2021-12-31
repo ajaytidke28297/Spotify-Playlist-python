@@ -1,6 +1,33 @@
 from bs4 import BeautifulSoup
 import requests
 from requests.models import Response
+from dotenv import load_dotenv
+import os
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+# Load environment variables
+load_dotenv()
+
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
+
+print(f"Client: {SPOTIFY_CLIENT_ID}\nSecret: {SPOTIFY_CLIENT_SECRET}")
+
+sp = spotipy.Spotify(
+    auth_manager=SpotifyOAuth(
+        scope="playlist-modify-private",
+        redirect_uri="http://example.com",
+        client_id=SPOTIFY_CLIENT_ID,
+        client_secret=SPOTIFY_CLIENT_SECRET,
+        show_dialog=True,
+        cache_path="token.txt"
+    )
+)
+
+user_id = sp.current_user()['id']
+
+print(f"User id: {user_id}")
 
 # Billboard URL
 BILL_BOARD_URL = 'https://www.billboard.com/charts/hot-100/'
