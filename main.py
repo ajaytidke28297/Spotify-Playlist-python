@@ -45,4 +45,15 @@ soup = BeautifulSoup(website_html, "html.parser")
 
 all_titles = soup.select("h3.a-no-trucate.a-font-primary-bold-s")
 song_names = [title.getText().strip() for title in all_titles]
-print(song_names)
+
+# Search for the song in spotify
+song_uris = []
+year = date.split("-")[0]
+for song in song_names:
+    result = sp.search(q=f"track:{song} year:{year}", type="track")
+    # print(result)
+    try:
+        uri = result["tracks"]["items"][0]["uri"]
+        song_uris.append(uri)
+    except IndexError:
+        print(f"{song} doesn't exist in Spotify. Skipped.")
